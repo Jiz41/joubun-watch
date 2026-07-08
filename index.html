@@ -1,587 +1,232 @@
-<title>条文ウォッチ｜法改正モニター（モック）</title>
-<style>
-  :root {
-    --bg: #f9fafc;
-    --surface: #ffffff;
-    --ink: #262c3d;
-    --ink-soft: #5c6478;
-    --ink-faint: #8991a5;
-    --rule: #e2e5eb;
-    --rule-soft: #edeff3;
-    --accent: #3f5ba3;
-    --accent-soft: #eef1fa;
-    --tag-bg: #f1f2f6;
-    --tag-ink: #4a5268;
-    --l1: #bf5138;
-    --l1-bg: #fcefec;
-    --l2: #c68432;
-    --l2-bg: #fcf2e1;
-    --l3: #9c8c34;
-    --l3-bg: #f8f4e0;
-    --l4: #3f7898;
-    --l4-bg: #ebf3f7;
-    --ins-bg: #e6f6e8;
-    --ins-ink: #2a7048;
-    --del-bg: #fceae8;
-    --del-ink: #a5432f;
-    --focus: #3f5ba3;
-    --diff-mono: "SF Mono", "Menlo", "Consolas", "Hiragino Kaku Gothic ProN", monospace;
-  }
-
-  :root[data-theme="dark"] {
-    --bg: #1c212b;
-    --surface: #262c38;
-    --ink: #eceef3;
-    --ink-soft: #c2c8d6;
-    --ink-faint: #8d94a8;
-    --rule: #37404f;
-    --rule-soft: #2d3541;
-    --accent: #9db0e6;
-    --accent-soft: #2c3757;
-    --tag-bg: #2d3441;
-    --tag-ink: #cfd4e2;
-    --l1: #e79a86;
-    --l1-bg: #402a24;
-    --l2: #e5bb85;
-    --l2-bg: #40331e;
-    --l3: #d8ca8c;
-    --l3-bg: #3b381f;
-    --l4: #9ccbe4;
-    --l4-bg: #23384a;
-    --ins-bg: #24402b;
-    --ins-ink: #9adba9;
-    --del-bg: #402c28;
-    --del-ink: #e6b1a5;
-    --focus: #9db0e6;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg: #1c212b;
-      --surface: #262c38;
-      --ink: #eceef3;
-      --ink-soft: #c2c8d6;
-      --ink-faint: #8d94a8;
-      --rule: #37404f;
-      --rule-soft: #2d3541;
-      --accent: #9db0e6;
-      --accent-soft: #2c3757;
-      --tag-bg: #2d3441;
-      --tag-ink: #cfd4e2;
-      --l1: #e79a86;
-      --l1-bg: #402a24;
-      --l2: #e5bb85;
-      --l2-bg: #40331e;
-      --l3: #d8ca8c;
-      --l3-bg: #3b381f;
-      --l4: #9ccbe4;
-      --l4-bg: #23384a;
-      --ins-bg: #24402b;
-      --ins-ink: #9adba9;
-      --del-bg: #402c28;
-      --del-ink: #e6b1a5;
-      --focus: #9db0e6;
-    }
-  }
-
-  * { box-sizing: border-box; }
-
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--ink);
-    font-family: "Hiragino Kaku Gothic ProN", "游ゴシック体", "Yu Gothic", "Noto Sans JP", sans-serif;
-    -webkit-font-smoothing: antialiased;
-    line-height: 1.7;
-  }
-
-  a { color: inherit; }
-
-  .masthead {
-    background: var(--surface);
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .masthead-inner {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 22px 20px 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .masthead-title {
-    font-family: "游明朝", "Yu Mincho", "Hiragino Mincho ProN", serif;
-    font-size: 1.7rem;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    text-wrap: balance;
-  }
-
-  .masthead-sub {
-    font-size: 0.82rem;
-    color: var(--ink-faint);
-    letter-spacing: 0.03em;
-  }
-
-  .filter-bar {
-    position: sticky;
-    top: 0;
-    z-index: 5;
-    background: var(--surface);
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .filter-row {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 10px 20px;
-    display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-  .filter-row::-webkit-scrollbar { display: none; }
-
-  .chip {
-    flex: none;
-    font-size: 0.78rem;
-    padding: 6px 13px;
-    border-radius: 999px;
-    border: 1px solid var(--rule);
-    background: var(--surface);
-    color: var(--ink-soft);
-    white-space: nowrap;
-    cursor: pointer;
-  }
-  .chip[data-active="true"] {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #fff;
-  }
-  main {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 6px 20px 80px;
-  }
-
-  .day-heading {
-    font-size: 0.78rem;
-    color: var(--ink-faint);
-    letter-spacing: 0.06em;
-    padding: 22px 0 8px;
-    font-variant-numeric: tabular-nums;
-  }
-
-  .entry {
-    border-top: 1px solid var(--rule-soft);
-    padding: 18px 0;
-  }
-  .entry:first-of-type { border-top: none; }
-
-  .entry-eyebrow {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.76rem;
-    color: var(--ink-faint);
-    margin-bottom: 6px;
-  }
-
-  .law-name {
-    color: var(--accent);
-    font-weight: 600;
-  }
-
-  .article-no {
-    font-variant-numeric: tabular-nums;
-  }
-
-  .headline {
-    font-family: "游明朝", "Yu Mincho", "Hiragino Mincho ProN", serif;
-    font-size: 1.18rem;
-    font-weight: 600;
-    line-height: 1.5;
-    text-wrap: balance;
-    margin: 0 0 10px;
-  }
-
-  .tag-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-bottom: 10px;
-  }
-
-  .tag {
-    font-size: 0.72rem;
-    padding: 3px 9px;
-    border-radius: 5px;
-    background: var(--tag-bg);
-    color: var(--tag-ink);
-  }
-
-  .severity {
-    font-size: 0.72rem;
-    font-weight: 700;
-    padding: 3px 9px;
-    border-radius: 5px;
-    letter-spacing: 0.02em;
-  }
-  .severity[data-level="L1"] { background: var(--l1-bg); color: var(--l1); }
-  .severity[data-level="L2"] { background: var(--l2-bg); color: var(--l2); }
-  .severity[data-level="L3"] { background: var(--l3-bg); color: var(--l3); }
-  .severity[data-level="L4"] { background: var(--l4-bg); color: var(--l4); }
-
-  .lede {
-    font-size: 0.92rem;
-    color: var(--ink-soft);
-    max-width: 62ch;
-  }
-
-  details.expand {
-    margin-top: 10px;
-  }
-
-  summary.expand-toggle {
-    list-style: none;
-    cursor: pointer;
-    font-size: 0.82rem;
-    color: var(--accent);
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    padding: 4px 0;
-  }
-  summary.expand-toggle::-webkit-details-marker { display: none; }
-  summary.expand-toggle::before {
-    content: "▸";
-    display: inline-block;
-    transition: transform 0.15s ease;
-    font-size: 0.7rem;
-  }
-  details[open] summary.expand-toggle::before {
-    transform: rotate(90deg);
-  }
-  summary.expand-toggle:focus-visible {
-    outline: 2px solid var(--focus);
-    outline-offset: 2px;
-    border-radius: 3px;
-  }
-
-  .diff-block {
-    margin-top: 12px;
-    background: var(--surface);
-    border: 1px solid var(--rule);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-
-  .diff-caption {
-    font-size: 0.72rem;
-    color: var(--ink-faint);
-    letter-spacing: 0.04em;
-    padding: 10px 16px 0;
-  }
-
-  .diff-lines {
-    display: flex;
-    flex-direction: column;
-    font-family: var(--diff-mono);
-    font-size: 0.83rem;
-    line-height: 1.75;
-    margin: 10px 0;
-    overflow-x: auto;
-  }
-
-  .diff-line {
-    display: grid;
-    grid-template-columns: 22px 1fr;
-    padding: 3px 16px;
-    white-space: pre-wrap;
-    word-break: break-word;
-  }
-  .diff-line.removed { background: var(--del-bg); color: var(--del-ink); }
-  .diff-line.added { background: var(--ins-bg); color: var(--ins-ink); }
-  .diff-line .marker {
-    font-weight: 700;
-    user-select: none;
-  }
-  .diff-line mark {
-    background: rgba(0,0,0,0.12);
-    color: inherit;
-    border-radius: 2px;
-    padding: 0 1px;
-  }
-  :root[data-theme="dark"] .diff-line mark { background: rgba(255,255,255,0.16); }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) .diff-line mark { background: rgba(255,255,255,0.16); }
-  }
-
-  .impact-block {
-    margin-top: 12px;
-  }
-
-  .impact-heading {
-    font-size: 0.76rem;
-    color: var(--ink-faint);
-    letter-spacing: 0.04em;
-    margin-bottom: 6px;
-  }
-
-  .impact-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-
-  .impact-pill {
-    font-size: 0.78rem;
-    padding: 4px 11px;
-    border-radius: 999px;
-    border: 1px solid var(--accent);
-    color: var(--accent);
-    background: var(--accent-soft);
-  }
-
-  .action-row {
-    display: flex;
-    gap: 14px;
-    margin-top: 14px;
-    font-size: 0.78rem;
-  }
-
-  .action-btn {
-    background: none;
-    border: none;
-    color: var(--ink-faint);
-    cursor: pointer;
-    padding: 4px 0;
-    border-bottom: 1px dotted var(--ink-faint);
-  }
-  .action-btn:hover { color: var(--ink); border-color: var(--ink); }
-  .action-btn:focus-visible {
-    outline: 2px solid var(--focus);
-    outline-offset: 2px;
-  }
-
-  .unclassified-note {
-    font-size: 0.78rem;
-    color: var(--ink-faint);
-    border-left: 3px solid var(--rule);
-    padding-left: 10px;
-    margin-top: 6px;
-  }
-
-  footer {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 24px 20px 60px;
-    font-size: 0.74rem;
-    color: var(--ink-faint);
-    border-top: 1px solid var(--rule-soft);
-  }
-</style>
+<title>条文ウォッチ｜法改正モニター</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="style.css">
 
 <div class="masthead">
   <div class="masthead-inner">
     <div class="masthead-title">条文ウォッチ</div>
-    <div class="masthead-sub">IT法務のための法改正モニター（表示イメージ・モック）</div>
+    <div class="masthead-sub">IT法務のための法改正モニター</div>
   </div>
 </div>
 
-<div class="filter-bar">
-  <div class="filter-row" role="tablist" aria-label="法域フィルタ">
-    <button class="chip" data-active="true" role="tab" aria-selected="true">すべて</button>
-    <button class="chip" role="tab" aria-selected="false">民法</button>
-    <button class="chip" role="tab" aria-selected="false">下請法</button>
-    <button class="chip" role="tab" aria-selected="false">派遣法</button>
-    <button class="chip" role="tab" aria-selected="false">個人情報保護法</button>
-    <button class="chip" role="tab" aria-selected="false">会社法</button>
-    <button class="chip" role="tab" aria-selected="false">消費者契約法</button>
-    <button class="chip" role="tab" aria-selected="false">労働基準法</button>
+<div class="tabwrap">
+  <input class="tabradio" type="radio" name="tab" id="tab-new" checked>
+  <input class="tabradio" type="radio" name="tab" id="tab-129AC0000000089">
+  <input class="tabradio" type="radio" name="tab" id="tab-322AC0000000049">
+  <input class="tabradio" type="radio" name="tab" id="tab-331AC0000000120">
+  <input class="tabradio" type="radio" name="tab" id="tab-360AC0000000088">
+  <input class="tabradio" type="radio" name="tab" id="tab-412AC0000000061">
+  <input class="tabradio" type="radio" name="tab" id="tab-415AC0000000057">
+  <input class="tabradio" type="radio" name="tab" id="tab-417AC0000000086">
+
+  <div class="tab-bar" role="tablist" aria-label="法域タブ">
+    <label class="tab" for="tab-new">新着</label>
+    <label class="tab" for="tab-129AC0000000089">民法</label>
+    <label class="tab" for="tab-322AC0000000049">労働基準法</label>
+    <label class="tab" for="tab-331AC0000000120">下請法</label>
+    <label class="tab" for="tab-360AC0000000088">労働者派遣法</label>
+    <label class="tab" for="tab-412AC0000000061">消費者契約法</label>
+    <label class="tab" for="tab-415AC0000000057">個人情報保護法</label>
+    <label class="tab" for="tab-417AC0000000086">会社法</label>
   </div>
+
+  <main class="panels">
+    <section class="panel" id="panel-new" aria-label="新着">
+      <div class="panel-lead">全法域の直近の改正から新しい順に10件</div>
+      <div class="list" id="list-new"></div>
+    </section>
+    <section class="panel" id="panel-129AC0000000089"><div class="list" id="list-129AC0000000089"></div></section>
+    <section class="panel" id="panel-322AC0000000049"><div class="list" id="list-322AC0000000049"></div></section>
+    <section class="panel" id="panel-331AC0000000120"><div class="list" id="list-331AC0000000120"></div></section>
+    <section class="panel" id="panel-360AC0000000088"><div class="list" id="list-360AC0000000088"></div></section>
+    <section class="panel" id="panel-412AC0000000061"><div class="list" id="list-412AC0000000061"></div></section>
+    <section class="panel" id="panel-415AC0000000057"><div class="list" id="list-415AC0000000057"></div></section>
+    <section class="panel" id="panel-417AC0000000086"><div class="list" id="list-417AC0000000086"></div></section>
+  </main>
 </div>
-
-<main>
-
-  <div class="day-heading">2026年6月24日 施行</div>
-
-  <article class="entry">
-    <div class="entry-eyebrow">
-      <span class="law-name">民法</span>
-      <span class="article-no">第765条</span>
-    </div>
-    <h2 class="headline">離婚届の受理要件に、未成年の子がいる場合の親権者指定確認を追加</h2>
-    <div class="tag-row">
-      <span class="severity" data-level="L1">L1 必須対応</span>
-      <span class="tag">共同親権関連</span>
-      <span class="tag">家族法務</span>
-    </div>
-    <p class="lede">協議離婚の届出審査で確認すべき事項が拡張された。婚姻・離婚関連の契約書雛形や社内規程への影響は限定的だが、家族法務を扱う実務では要確認。</p>
-    <details class="expand">
-      <summary class="expand-toggle">条文の変化を見る</summary>
-      <div class="diff-block">
-        <div class="diff-caption">旧 → 新（差分表示）</div>
-        <div class="diff-lines">
-          <div class="diff-line removed"><span class="marker">−</span><span>…規定<mark>及び第八百十九条第一項の規定</mark>その他の法令の規定に違反しないことを認めた後でなければ、受理することができない。</span></div>
-          <div class="diff-line added"><span class="marker">+</span><span>…規定その他の法令の規定に違反しないこと<mark>及び夫婦間に成年に達しない子がある場合には次の各号のいずれかに該当すること</mark>を認めた後でなければ、受理することができない。一　親権者の定めがされていること。二　親権者の…</span></div>
-        </div>
-      </div>
-      <div class="impact-block">
-        <div class="impact-heading">影響が及びそうな業務</div>
-        <div class="impact-list">
-          <span class="impact-pill">家族信託・相続関連契約</span>
-          <span class="impact-pill">戸籍関連手続き代行</span>
-        </div>
-      </div>
-      <div class="action-row">
-        <button class="action-btn">この改正の全文を見る</button>
-        <button class="action-btn">タグが違うと思ったら報告</button>
-      </div>
-    </details>
-  </article>
-
-  <article class="entry">
-    <div class="entry-eyebrow">
-      <span class="law-name">労働者派遣法</span>
-      <span class="article-no">第35条の2</span>
-    </div>
-    <h2 class="headline">労働者派遣の期間制限（いわゆる3年ルール）の算定方法を改正</h2>
-    <div class="tag-row">
-      <span class="severity" data-level="L1">L1 必須対応</span>
-      <span class="tag">SES契約</span>
-      <span class="tag">IT・受託開発</span>
-      <span class="tag">派遣元/派遣先</span>
-    </div>
-    <p class="lede">SES契約の期間管理・契約更新実務に直結する改正。既存の派遣基本契約・個別契約書の期間条項を確認する必要がある。</p>
-    <details class="expand">
-      <summary class="expand-toggle">条文の変化を見る</summary>
-      <div class="diff-block">
-        <div class="diff-caption">旧 → 新（差分表示）</div>
-        <div class="diff-lines">
-          <div class="diff-line removed"><span class="marker">−</span><span>派遣先は、…事業所その他派遣就業の場所ごとの業務について、<mark>三年を超える期間継続して同一の派遣労働者に係る</mark>労働者派遣の役務の提供を受けてはならない…</span></div>
-          <div class="diff-line added"><span class="marker">+</span><span>派遣先は、…事業所その他派遣就業の場所ごとの業務について、<mark>厚生労働省令で定める期間を超える期間継続して</mark>労働者派遣の役務の提供を受けてはならない…</span></div>
-        </div>
-      </div>
-      <div class="impact-block">
-        <div class="impact-heading">影響が及びそうな業務</div>
-        <div class="impact-list">
-          <span class="impact-pill">SES契約書の期間条項</span>
-          <span class="impact-pill">派遣元管理台帳の運用</span>
-          <span class="impact-pill">偽装請負リスク点検</span>
-        </div>
-      </div>
-      <div class="action-row">
-        <button class="action-btn">この改正の全文を見る</button>
-        <button class="action-btn">タグが違うと思ったら報告</button>
-      </div>
-    </details>
-  </article>
-
-  <article class="entry">
-    <div class="entry-eyebrow">
-      <span class="law-name">個人情報保護法</span>
-      <span class="article-no">第25条</span>
-    </div>
-    <h2 class="headline">委託先の監督義務に関する規定を一部整備</h2>
-    <div class="tag-row">
-      <span class="severity" data-level="L2">L2 対応推奨</span>
-      <span class="tag">SaaS事業者</span>
-      <span class="tag">再委託管理</span>
-    </div>
-    <p class="lede">クラウドサービス提供時の再委託先管理に関わる条文。委託契約書・データ処理契約（DPA）の見直しを推奨。</p>
-    <details class="expand">
-      <summary class="expand-toggle">条文の変化を見る</summary>
-      <div class="diff-block">
-        <div class="diff-caption">旧 → 新（差分表示・簡略化したサンプル）</div>
-        <div class="diff-lines">
-          <div class="diff-line removed"><span class="marker">−</span><span>個人情報取扱事業者は、個人データの取扱いの全部又は一部を委託する場合は、委託を受けた者に対する必要かつ適切な監督を行わなければならない。</span></div>
-          <div class="diff-line added"><span class="marker">+</span><span>個人情報取扱事業者は、個人データの取扱いの全部又は一部を委託する場合は、<mark>その取扱いを委託された個人データの安全管理が図られるよう、</mark>委託を受けた者に対する必要かつ適切な監督を行わなければならない。</span></div>
-        </div>
-      </div>
-      <div class="impact-block">
-        <div class="impact-heading">影響が及びそうな業務</div>
-        <div class="impact-list">
-          <span class="impact-pill">委託契約書・DPAレビュー</span>
-          <span class="impact-pill">クラウド利用規約</span>
-        </div>
-      </div>
-      <div class="action-row">
-        <button class="action-btn">この改正の全文を見る</button>
-        <button class="action-btn">タグが違うと思ったら報告</button>
-      </div>
-    </details>
-  </article>
-
-  <article class="entry">
-    <div class="entry-eyebrow">
-      <span class="law-name">下請法</span>
-      <span class="article-no">第4条</span>
-    </div>
-    <h2 class="headline">中小受託事業者への給付内容等の明示義務、記載事項を追加</h2>
-    <div class="tag-row">
-      <span class="severity" data-level="L3">L3 条件付き</span>
-      <span class="tag">情報成果物委託</span>
-      <span class="tag">発注側</span>
-    </div>
-    <p class="lede">システム開発委託を発注する側の書面（発注書・仕様書）記載事項に影響しうる。自社が発注側に該当する場合のみ確認対象。</p>
-    <details class="expand">
-      <summary class="expand-toggle">条文の変化を見る</summary>
-      <div class="diff-block">
-        <div class="diff-caption">旧 → 新（差分表示・簡略化したサンプル）</div>
-        <div class="diff-lines">
-          <div class="diff-line removed"><span class="marker">−</span><span>委託事業者は、…直ちに、公正取引委員会規則で定める事項を記載した書面を下請事業者に交付しなければならない。</span></div>
-          <div class="diff-line added"><span class="marker">+</span><span>委託事業者は、…直ちに、公正取引委員会規則で定める事項<mark>（電磁的記録による提供方法を含む。）</mark>を記載した書面を下請事業者に交付しなければならない。</span></div>
-        </div>
-      </div>
-      <div class="impact-block">
-        <div class="impact-heading">影響が及びそうな業務</div>
-        <div class="impact-list">
-          <span class="impact-pill">発注書テンプレート</span>
-          <span class="impact-pill">多重下請け構造の管理</span>
-        </div>
-      </div>
-      <div class="action-row">
-        <button class="action-btn">この改正の全文を見る</button>
-        <button class="action-btn">タグが違うと思ったら報告</button>
-      </div>
-    </details>
-  </article>
-
-  <div class="day-heading">2026年5月21日 施行</div>
-
-  <article class="entry">
-    <div class="entry-eyebrow">
-      <span class="law-name">会社法</span>
-      <span class="article-no">第236条</span>
-    </div>
-    <h2 class="headline">新株予約権の内容に関する定めを一部改正</h2>
-    <div class="tag-row">
-      <span class="tag">未分類</span>
-      <span class="tag">ストックオプション</span>
-    </div>
-    <p class="lede">条文は検知済みだが、辞書に該当エントリが未登録のため影響区分は自動判定していない。</p>
-    <details class="expand">
-      <summary class="expand-toggle">条文の変化を見る</summary>
-      <div class="diff-block">
-        <div class="diff-caption">旧 → 新（差分表示・簡略化したサンプル）</div>
-        <div class="diff-lines">
-          <div class="diff-line removed"><span class="marker">−</span><span>株式会社は、その発行する新株予約権の内容として次に掲げる事項を定めなければならない。</span></div>
-          <div class="diff-line added"><span class="marker">+</span><span>株式会社は、その発行する新株予約権の内容として次に掲げる事項を定めなければならない<mark>ほか、法務省令で定める事項を定めることができる</mark>。</span></div>
-        </div>
-      </div>
-      <div class="unclassified-note">この条文はまだ影響タグが割り当てられていません。実務への影響に心当たりがあれば報告してください。</div>
-      <div class="action-row">
-        <button class="action-btn">この改正の全文を見る</button>
-        <button class="action-btn">影響業務を報告する</button>
-      </div>
-    </details>
-  </article>
-
-</main>
 
 <footer>
-  条文ウォッチ（モック） — 表示内容はUI検討用のサンプルデータであり、実際の施行日・条文内容と厳密には一致しません。
+  <p>条文ウォッチ — e-Gov法令APIの改正履歴をもとに、直近3ヶ月の本則条文の変化を自動検知して表示する早見表です。深い履歴や正確な条文はe-Gov本体でご確認ください。</p>
+  <p class="source">出典：e-Gov法令検索（<a href="https://laws.e-gov.go.jp/" target="_blank" rel="noopener noreferrer">https://laws.e-gov.go.jp/</a>）</p>
 </footer>
+
+<script>
+(function () {
+  "use strict";
+
+  var LAW_IDS = [
+    "129AC0000000089", "322AC0000000049", "331AC0000000120",
+    "360AC0000000088", "412AC0000000061", "415AC0000000057",
+    "417AC0000000086"
+  ];
+  var NEW_DAYS = 3;
+  var NEW_LIMIT = 10;
+
+  function escapeHtml(s) {
+    return String(s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function formatArticle(num) {
+    return "第" + num + "条";
+  }
+
+  function formatDate(iso) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || "");
+    if (!m) { return iso || ""; }
+    return Number(m[1]) + "年" + Number(m[2]) + "月" + Number(m[3]) + "日";
+  }
+
+  function parseDate(iso) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || "");
+    if (!m) { return null; }
+    return new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+  }
+
+  function isNew(iso) {
+    var d = parseDate(iso);
+    if (!d) { return false; }
+    var now = new Date();
+    var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    var diff = Math.round((today - d) / 86400000);
+    return Math.abs(diff) <= NEW_DAYS;
+  }
+
+  // 先頭・末尾の共通部分を除いた中央だけを <mark> で囲む簡易差分。
+  function diffHtml(oldText, newText) {
+    var o = oldText || "";
+    var n = newText || "";
+    if (o === "" || n === "") {
+      return { old: escapeHtml(o), neu: escapeHtml(n) };
+    }
+    var p = 0;
+    var maxP = Math.min(o.length, n.length);
+    while (p < maxP && o.charAt(p) === n.charAt(p)) { p++; }
+    var s = 0;
+    var maxS = Math.min(o.length - p, n.length - p);
+    while (s < maxS && o.charAt(o.length - 1 - s) === n.charAt(n.length - 1 - s)) { s++; }
+    var oMid = o.slice(p, o.length - s);
+    var nMid = n.slice(p, n.length - s);
+    var pre = escapeHtml(o.slice(0, p));
+    var suf = escapeHtml(o.slice(o.length - s));
+    var oHtml = pre + (oMid ? "<mark>" + escapeHtml(oMid) + "</mark>" : "") + suf;
+    var nHtml = pre + (nMid ? "<mark>" + escapeHtml(nMid) + "</mark>" : "") + suf;
+    return { old: oHtml, neu: nHtml };
+  }
+
+  function tagList(tags) {
+    var out = [];
+    if (tags && Array.isArray(tags.industry)) { out = out.concat(tags.industry); }
+    if (tags && Array.isArray(tags.stance)) { out = out.concat(tags.stance); }
+    return out;
+  }
+
+  function renderEntry(c) {
+    var classified = !!c.severity;
+    var article = formatArticle(c.article_num);
+    var newBadge = isNew(c.enforcement_date)
+      ? '<span class="new-badge">NEW</span>' : "";
+
+    var sevHtml = classified
+      ? '<span class="severity" data-level="' + escapeHtml(c.severity) + '">'
+        + escapeHtml(c.severity) + "</span>"
+      : '<span class="tag tag-unclassified">未分類</span>';
+
+    var tags = classified ? tagList(c.tags) : [];
+    var tagsHtml = tags.map(function (t) {
+      return '<span class="tag">' + escapeHtml(t) + "</span>";
+    }).join("");
+
+    var heading = c.heading || "本則条文の改正を検知";
+    var lede = c.note || "条文本文に変更が検出されました。";
+
+    var d = diffHtml(c.old_text, c.new_text);
+    var lines = "";
+    if (c.old_text) {
+      lines += '<div class="diff-line removed"><span class="marker">−</span><span>'
+        + d.old + "</span></div>";
+    }
+    if (c.new_text) {
+      lines += '<div class="diff-line added"><span class="marker">+</span><span>'
+        + d.neu + "</span></div>";
+    }
+
+    var unclassifiedNote = classified ? "" :
+      '<div class="unclassified-note">この条文はまだ影響タグが割り当てられていません。</div>';
+
+    var egovUrl = "https://laws.e-gov.go.jp/law/" + encodeURIComponent(c.law_id);
+    var egovLink = c.law_id
+      ? '<div class="entry-source">'
+        + '<a class="egov-link" href="' + escapeHtml(egovUrl) + '"'
+        + ' target="_blank" rel="noopener noreferrer">e-Govで原文を見る</a>'
+        + "</div>"
+      : "";
+
+    return '<article class="entry">'
+      + '<div class="entry-eyebrow">'
+      + '<span class="law-name">' + escapeHtml(c.law_title) + "</span>"
+      + '<span class="article-no">' + escapeHtml(article) + "</span>"
+      + '<span class="enforce-date">' + escapeHtml(formatDate(c.enforcement_date)) + " 施行</span>"
+      + newBadge
+      + "</div>"
+      + '<h2 class="headline">' + escapeHtml(heading) + "</h2>"
+      + '<div class="tag-row">' + sevHtml + tagsHtml + "</div>"
+      + '<p class="lede">' + escapeHtml(lede) + "</p>"
+      + '<details class="expand"><summary class="expand-toggle">条文の変化を見る</summary>'
+      + '<div class="diff-block"><div class="diff-caption">旧 → 新（差分表示）</div>'
+      + '<div class="diff-lines">' + lines + "</div></div>"
+      + unclassifiedNote
+      + "</details>"
+      + egovLink
+      + "</article>";
+  }
+
+  function sortByDateDesc(a, b) {
+    if (a.enforcement_date < b.enforcement_date) { return 1; }
+    if (a.enforcement_date > b.enforcement_date) { return -1; }
+    return 0;
+  }
+
+  function fillList(elId, entries, emptyMsg) {
+    var el = document.getElementById(elId);
+    if (!el) { return; }
+    if (!entries.length) {
+      el.innerHTML = '<p class="empty-note">' + escapeHtml(emptyMsg) + "</p>";
+      return;
+    }
+    el.innerHTML = entries.map(renderEntry).join("");
+  }
+
+  function render(changes) {
+    var all = changes.slice().sort(sortByDateDesc);
+
+    fillList("list-new", all.slice(0, NEW_LIMIT), "直近の改正はありません。");
+
+    LAW_IDS.forEach(function (id) {
+      var rows = all.filter(function (c) { return c.law_id === id; });
+      fillList("list-" + id, rows, "直近の改正はありません。");
+    });
+  }
+
+  function showError(msg) {
+    var el = document.getElementById("list-new");
+    if (el) {
+      el.innerHTML = '<p class="empty-note">' + escapeHtml(msg) + "</p>";
+    }
+  }
+
+  fetch("data/feed.json", { cache: "no-store" })
+    .then(function (r) {
+      if (!r.ok) { throw new Error("HTTP " + r.status); }
+      return r.json();
+    })
+    .then(function (data) { render(data.changes || []); })
+    .catch(function (e) {
+      showError("データの読み込みに失敗しました（" + e.message + "）。");
+    });
+})();
+</script>

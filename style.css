@@ -1,0 +1,410 @@
+  :root {
+    --bg: #2b313d;
+    --surface: #363d4c;
+    --ink: #f2f4f9;
+    --ink-soft: #d1d6e2;
+    --ink-faint: #9aa3b8;
+    --rule: #525c70;
+    --rule-soft: #434c5d;
+    --accent: #a9bbef;
+    --accent-soft: #3a4772;
+    --tag-bg: #424b5c;
+    --tag-ink: #d7dce9;
+    --l1: #f0a893;
+    --l1-bg: #543630;
+    --l2: #efc491;
+    --l2-bg: #524329;
+    --l3: #e0d296;
+    --l3-bg: #4b4829;
+    --l4: #a6d4ec;
+    --l4-bg: #2f4a5e;
+    --ins-bg: #33583c;
+    --ins-ink: #a9e5b8;
+    --del-bg: #543b36;
+    --del-ink: #efbcb0;
+    --focus: #a9bbef;
+    --diff-mono: "SF Mono", "Menlo", "Consolas", "Hiragino Kaku Gothic ProN", monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Hiragino Kaku Gothic ProN", "游ゴシック体", "Yu Gothic", "Noto Sans JP", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.7;
+  }
+
+  a { color: inherit; }
+
+  .masthead {
+    background: var(--surface);
+    border-bottom: 1px dashed var(--rule);
+  }
+
+  .masthead-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 22px 20px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .masthead-title {
+    font-family: "游明朝", "Yu Mincho", "Hiragino Mincho ProN", serif;
+    font-size: 1.7rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-wrap: balance;
+  }
+
+  .masthead-sub {
+    font-size: 0.82rem;
+    color: var(--ink-faint);
+    letter-spacing: 0.03em;
+  }
+
+  /* --- タブ（radio + label のCSSのみ切り替え） --- */
+  .tabwrap { width: 100%; }
+
+  .tabradio {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .tab-bar {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 10px 20px;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    background: var(--surface);
+    border-bottom: 1px dashed var(--rule);
+  }
+  .tab-bar::-webkit-scrollbar { display: none; }
+
+  .tab {
+    flex: none;
+    font-size: 0.82rem;
+    padding: 10px 15px;
+    border-radius: 999px;
+    border: 1px dashed var(--rule);
+    background: var(--surface);
+    color: var(--ink-soft);
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+  }
+  .tab:hover { color: var(--ink); }
+
+  /* キーボードフォーカス時のリング（radioは視覚的に隠しているため label に付与） */
+  #tab-new:focus-visible ~ .tab-bar .tab[for="tab-new"],
+  #tab-129AC0000000089:focus-visible ~ .tab-bar .tab[for="tab-129AC0000000089"],
+  #tab-322AC0000000049:focus-visible ~ .tab-bar .tab[for="tab-322AC0000000049"],
+  #tab-331AC0000000120:focus-visible ~ .tab-bar .tab[for="tab-331AC0000000120"],
+  #tab-360AC0000000088:focus-visible ~ .tab-bar .tab[for="tab-360AC0000000088"],
+  #tab-412AC0000000061:focus-visible ~ .tab-bar .tab[for="tab-412AC0000000061"],
+  #tab-415AC0000000057:focus-visible ~ .tab-bar .tab[for="tab-415AC0000000057"],
+  #tab-417AC0000000086:focus-visible ~ .tab-bar .tab[for="tab-417AC0000000086"] {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  /* アクティブなタブの強調 */
+  #tab-new:checked ~ .tab-bar .tab[for="tab-new"],
+  #tab-129AC0000000089:checked ~ .tab-bar .tab[for="tab-129AC0000000089"],
+  #tab-322AC0000000049:checked ~ .tab-bar .tab[for="tab-322AC0000000049"],
+  #tab-331AC0000000120:checked ~ .tab-bar .tab[for="tab-331AC0000000120"],
+  #tab-360AC0000000088:checked ~ .tab-bar .tab[for="tab-360AC0000000088"],
+  #tab-412AC0000000061:checked ~ .tab-bar .tab[for="tab-412AC0000000061"],
+  #tab-415AC0000000057:checked ~ .tab-bar .tab[for="tab-415AC0000000057"],
+  #tab-417AC0000000086:checked ~ .tab-bar .tab[for="tab-417AC0000000086"] {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #1c212b;
+    font-weight: 600;
+  }
+
+  /* パネル表示切り替え */
+  .panel { display: none; }
+  #tab-new:checked ~ .panels #panel-new,
+  #tab-129AC0000000089:checked ~ .panels #panel-129AC0000000089,
+  #tab-322AC0000000049:checked ~ .panels #panel-322AC0000000049,
+  #tab-331AC0000000120:checked ~ .panels #panel-331AC0000000120,
+  #tab-360AC0000000088:checked ~ .panels #panel-360AC0000000088,
+  #tab-412AC0000000061:checked ~ .panels #panel-412AC0000000061,
+  #tab-415AC0000000057:checked ~ .panels #panel-415AC0000000057,
+  #tab-417AC0000000086:checked ~ .panels #panel-417AC0000000086 {
+    display: block;
+  }
+
+  .panels {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 6px 20px 80px;
+  }
+
+  .panel-lead {
+    font-size: 0.78rem;
+    color: var(--ink-faint);
+    letter-spacing: 0.04em;
+    padding: 16px 0 4px;
+  }
+
+  .empty-note {
+    font-size: 0.9rem;
+    color: var(--ink-faint);
+    padding: 28px 0;
+    text-align: center;
+    border-top: 1px dashed var(--rule-soft);
+    margin-top: 8px;
+  }
+
+  .entry {
+    border-top: 1px dashed var(--rule-soft);
+    padding: 18px 0;
+  }
+  .entry:first-of-type { border-top: none; }
+
+  .entry-eyebrow {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 0.76rem;
+    color: var(--ink-faint);
+    margin-bottom: 6px;
+  }
+
+  .law-name {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .article-no {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .enforce-date {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+  }
+
+  .new-badge {
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 2px 7px;
+    border-radius: 4px;
+    color: #1c212b;
+    background: var(--accent);
+    animation: newpulse 1.6s ease-in-out infinite;
+  }
+
+  @keyframes newpulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(169, 187, 239, 0.55); }
+    50% { opacity: 0.72; box-shadow: 0 0 8px 2px rgba(169, 187, 239, 0.45); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .new-badge {
+      animation: none;
+      opacity: 1;
+      box-shadow: none;
+    }
+  }
+
+  .headline {
+    font-family: "游明朝", "Yu Mincho", "Hiragino Mincho ProN", serif;
+    font-size: 1.18rem;
+    font-weight: 600;
+    line-height: 1.5;
+    text-wrap: balance;
+    margin: 0 0 10px;
+  }
+
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .tag {
+    font-size: 0.72rem;
+    padding: 3px 9px;
+    border-radius: 5px;
+    background: var(--tag-bg);
+    color: var(--tag-ink);
+  }
+  .tag-unclassified {
+    background: transparent;
+    border: 1px dashed var(--rule);
+    color: var(--ink-faint);
+  }
+
+  .severity {
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 5px;
+    letter-spacing: 0.02em;
+  }
+  .severity[data-level="L1"] { background: var(--l1-bg); color: var(--l1); }
+  .severity[data-level="L2"] { background: var(--l2-bg); color: var(--l2); }
+  .severity[data-level="L3"] { background: var(--l3-bg); color: var(--l3); }
+  .severity[data-level="L4"] { background: var(--l4-bg); color: var(--l4); }
+
+  .lede {
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    max-width: 62ch;
+  }
+
+  details.expand {
+    margin-top: 10px;
+  }
+
+  summary.expand-toggle {
+    list-style: none;
+    cursor: pointer;
+    font-size: 0.86rem;
+    color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-height: 44px;
+    padding: 8px 0;
+  }
+  summary.expand-toggle::-webkit-details-marker { display: none; }
+  summary.expand-toggle::before {
+    content: "▸";
+    display: inline-block;
+    transition: transform 0.15s ease;
+    font-size: 0.7rem;
+  }
+  details[open] summary.expand-toggle::before {
+    transform: rotate(90deg);
+  }
+  summary.expand-toggle:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+    border-radius: 3px;
+  }
+
+  .diff-block {
+    margin-top: 12px;
+    background: var(--surface);
+    border: 1px dashed var(--rule);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .diff-caption {
+    font-size: 0.72rem;
+    color: var(--ink-faint);
+    letter-spacing: 0.04em;
+    padding: 10px 16px 0;
+  }
+
+  .diff-lines {
+    display: flex;
+    flex-direction: column;
+    font-family: var(--diff-mono);
+    font-size: 0.83rem;
+    line-height: 1.75;
+    margin: 10px 0;
+    overflow-x: auto;
+  }
+
+  .diff-line {
+    display: grid;
+    grid-template-columns: 22px 1fr;
+    padding: 3px 16px;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .diff-line.removed { background: var(--del-bg); color: var(--del-ink); }
+  .diff-line.added { background: var(--ins-bg); color: var(--ins-ink); }
+  .diff-line .marker {
+    font-weight: 700;
+    user-select: none;
+  }
+  .diff-line mark {
+    background: rgba(255, 255, 255, 0.18);
+    color: inherit;
+    border-radius: 2px;
+    padding: 0 1px;
+  }
+
+  .unclassified-note {
+    font-size: 0.78rem;
+    color: var(--ink-faint);
+    border-left: 3px dashed var(--rule);
+    padding-left: 10px;
+    margin-top: 10px;
+  }
+
+  .entry-source {
+    margin-top: 12px;
+  }
+
+  .egov-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    padding: 8px 14px;
+    border: 1px dashed var(--rule);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--accent);
+    font-size: 0.84rem;
+    text-decoration: none;
+    max-width: 100%;
+  }
+  .egov-link::before {
+    content: "↗";
+    font-size: 0.9rem;
+  }
+  .egov-link:hover {
+    border-color: var(--accent);
+  }
+  .egov-link:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  footer {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 24px 20px 60px;
+    font-size: 0.78rem;
+    line-height: 1.8;
+    color: var(--ink-faint);
+    border-top: 1px dashed var(--rule-soft);
+  }
+  footer p { margin: 0 0 8px; }
+  footer .source { margin-bottom: 0; }
+  footer .source a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    word-break: break-all;
+  }
+  footer .source a:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+    border-radius: 3px;
+  }
