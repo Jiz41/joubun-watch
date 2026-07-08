@@ -25,6 +25,7 @@
     --focus: #a9bbef;
     --diff-mono: "SF Mono", "Menlo", "Consolas", "Hiragino Kaku Gothic ProN", monospace;
     --diff-mark-underline: #ffffff; /* 見づらければ #f2d84a 等の黄色に変更 */
+    --diff-mark-glow: rgba(255, 255, 255, 0.55); /* 下線色と合わせて調整 */
   }
 
   * { box-sizing: border-box; }
@@ -397,10 +398,12 @@
     background: none;
     color: inherit;
     padding: 0;
+    font-weight: 700;
     text-decoration: underline;
     text-decoration-color: var(--diff-mark-underline, #ffffff);
     text-decoration-thickness: 2px;
-    text-underline-offset: 2px;
+    text-underline-offset: 3px;
+    text-shadow: 0 0 6px var(--diff-mark-glow, rgba(255, 255, 255, 0.55));
   }
 
   .unclassified-note {
