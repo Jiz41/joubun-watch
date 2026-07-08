@@ -5,8 +5,9 @@
 
 <div class="masthead">
   <div class="masthead-inner">
-    <div class="masthead-title">条文ウォッチ</div>
+    <label class="masthead-title" for="tab-new">条文ウォッチ</label>
     <div class="masthead-sub">IT法務のための法改正モニター</div>
+    <a class="masthead-usage" href="usage.html">記号・タグの使い方</a>
   </div>
 </div>
 
@@ -131,6 +132,13 @@
     var newBadge = isNew(c.enforcement_date)
       ? '<span class="new-badge">NEW</span>' : "";
 
+    var isRenumbered = (c.change_type === "renumbered"
+      || c.change_type === "renumbered_and_changed");
+    var moveBadge = (isRenumbered && c.old_article_num)
+      ? '<span class="move-badge">番号変更 第' + escapeHtml(c.old_article_num)
+        + "条→第" + escapeHtml(c.article_num) + "条</span>"
+      : "";
+
     var sevHtml = classified
       ? '<span class="severity" data-level="' + escapeHtml(c.severity) + '">'
         + escapeHtml(c.severity) + "</span>"
@@ -172,6 +180,7 @@
       + '<span class="article-no">' + escapeHtml(article) + "</span>"
       + '<span class="enforce-date">' + escapeHtml(formatDate(c.enforcement_date)) + " 施行</span>"
       + newBadge
+      + moveBadge
       + "</div>"
       + '<h2 class="headline">' + escapeHtml(heading) + "</h2>"
       + '<div class="tag-row">' + sevHtml + tagsHtml + "</div>"

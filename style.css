@@ -59,12 +59,51 @@
     font-weight: 600;
     letter-spacing: 0.02em;
     text-wrap: balance;
+    align-self: flex-start;
+    cursor: pointer;
+    user-select: none;
+  }
+  .masthead-title:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 3px;
+    border-radius: 3px;
   }
 
   .masthead-sub {
     font-size: 0.82rem;
     color: var(--ink-faint);
     letter-spacing: 0.03em;
+  }
+
+  .masthead-usage {
+    margin-top: 6px;
+    align-self: flex-start;
+    font-size: 0.78rem;
+    color: var(--accent);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-height: 44px;
+    padding: 6px 0;
+  }
+  .masthead-usage::before {
+    content: "?";
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.15em;
+    height: 1.15em;
+    border: 1px dashed var(--rule);
+    border-radius: 50%;
+    font-size: 0.72rem;
+    line-height: 1;
+  }
+  .masthead-usage:hover { text-decoration: underline; text-underline-offset: 2px; }
+  .masthead-usage:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+    border-radius: 3px;
   }
 
   /* --- タブ（radio + label のCSSのみ切り替え） --- */
@@ -223,6 +262,18 @@
       opacity: 1;
       box-shadow: none;
     }
+  }
+
+  .move-badge {
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 2px 7px;
+    border-radius: 4px;
+    color: var(--l4);
+    background: var(--l4-bg);
+    border: 1px dashed var(--l4);
+    white-space: nowrap;
   }
 
   .headline {
@@ -384,6 +435,78 @@
   .egov-link:focus-visible {
     outline: 2px solid var(--focus);
     outline-offset: 2px;
+  }
+
+  /* --- 使い方ページ --- */
+  .usage {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 6px 20px 40px;
+  }
+
+  .usage-intro {
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    padding: 18px 0 4px;
+    max-width: 62ch;
+  }
+
+  .usage-section {
+    border-top: 1px dashed var(--rule-soft);
+    padding: 20px 0;
+  }
+
+  .usage-h {
+    font-family: "游明朝", "Yu Mincho", "Hiragino Mincho ProN", serif;
+    font-size: 1.12rem;
+    font-weight: 600;
+    line-height: 1.5;
+    margin: 0 0 8px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .usage-lead {
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    margin: 0 0 10px;
+    max-width: 62ch;
+  }
+  .usage-lead:last-child { margin-bottom: 0; }
+  .usage-lead strong { color: var(--ink); }
+
+  .usage-dl { margin: 10px 0 0; }
+
+  .usage-row {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 10px 14px;
+    padding: 10px 0;
+    border-top: 1px dashed var(--rule-soft);
+    align-items: start;
+  }
+  .usage-row:first-child { border-top: none; }
+
+  .usage-row dt {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .usage-row dd {
+    margin: 0;
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+  }
+  .usage-row dd strong { color: var(--ink); }
+
+  @media (max-width: 460px) {
+    .usage-row {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
   }
 
   footer {

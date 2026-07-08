@@ -1,0 +1,101 @@
+<title>使い方｜条文ウォッチ</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="style.css">
+
+<div class="masthead">
+  <div class="masthead-inner">
+    <a class="masthead-title" href="index.html">条文ウォッチ</a>
+    <div class="masthead-sub">記号・タグの使い方</div>
+    <a class="masthead-usage" href="index.html">一覧に戻る</a>
+  </div>
+</div>
+
+<main class="usage">
+  <p class="usage-intro">
+    このページは、一覧に表示される記号・タグ・バッジの意味をまとめたものです。
+    表示はいずれも e-Gov法令APIの改正履歴をもとに自動生成しており、実務判断の
+    最終確認は e-Gov本体の原文で行ってください。
+  </p>
+
+  <section class="usage-section">
+    <h2 class="usage-h">影響強度（L1〜L4）</h2>
+    <p class="usage-lead">その改正が実務にどれだけ直接響くかの目安です。数字が小さいほど優先度が高くなります。</p>
+    <dl class="usage-dl">
+      <div class="usage-row">
+        <dt><span class="severity" data-level="L1">L1</span></dt>
+        <dd><strong>必須対応</strong>。契約書式・社内規程・運用フローの見直しが直ちに必要になり得る改正です。</dd>
+      </div>
+      <div class="usage-row">
+        <dt><span class="severity" data-level="L2">L2</span></dt>
+        <dd><strong>要確認</strong>。自社の該当有無を確認し、当てはまれば対応を検討する改正です。</dd>
+      </div>
+      <div class="usage-row">
+        <dt><span class="severity" data-level="L3">L3</span></dt>
+        <dd><strong>把握推奨</strong>。直ちの対応は不要でも、経緯として押さえておきたい改正です。</dd>
+      </div>
+      <div class="usage-row">
+        <dt><span class="severity" data-level="L4">L4</span></dt>
+        <dd><strong>情報把握</strong>。参考情報。実務への影響は限定的とみられる改正です。</dd>
+      </div>
+    </dl>
+  </section>
+
+  <section class="usage-section">
+    <h2 class="usage-h">業種タグ・立場タグ</h2>
+    <p class="usage-lead">その条文が「誰にとって」効いてくるかを示す補助ラベルです。</p>
+    <dl class="usage-dl">
+      <div class="usage-row">
+        <dt><span class="tag">業種タグ</span></dt>
+        <dd>「IT」「全般」など、その改正が主に関わる業種の目安です。自社の業種に近いものを優先して見てください。</dd>
+      </div>
+      <div class="usage-row">
+        <dt><span class="tag">発注側</span> <span class="tag">受注側</span></dt>
+        <dd>取引上どちらの立場で読むべきかを示します。たとえば下請法では、発注側（委託する側）と受注側（受託する側）で負う義務・守られる権利が異なります。</dd>
+      </div>
+      <div class="usage-row">
+        <dt><span class="tag">使用者</span> <span class="tag">労働者</span></dt>
+        <dd>労働関連法では、雇う側（使用者）と働く側（労働者）のどちらに関係する条文かを示します。</dd>
+      </div>
+    </dl>
+  </section>
+
+  <section class="usage-section">
+    <h2 class="usage-h"><span class="new-badge">NEW</span> バッジ</h2>
+    <p class="usage-lead">
+      施行日が直近3日以内（前後）の改正に付きます。ごく最近効力が生じた（または間もなく生じる）変更の目印です。
+      時間が経つと自動的に外れます。
+    </p>
+  </section>
+
+  <section class="usage-section">
+    <h2 class="usage-h"><span class="move-badge">番号変更 第X条→第Y条</span></h2>
+    <p class="usage-lead">
+      条文の「引っ越し」を示します。法改正では、条文の中身はほぼ同じまま条番号だけが
+      繰り下がる・付け替わることがあります（大規模な条文再編で起こりがちです）。
+    </p>
+    <p class="usage-lead">
+      このバッジが付いた項目は、<strong>条文そのものが新しく生まれた・消えたわけではなく、
+      同じ内容が別の番号に移った</strong>ことを表します。「第X条」が旧番号、「第Y条」が新番号です。
+      引っ越しに加えて本文も変わっている場合は、差分表示で変更箇所を確認できます。
+    </p>
+  </section>
+
+  <section class="usage-section">
+    <h2 class="usage-h"><span class="tag tag-unclassified">未分類</span></h2>
+    <p class="usage-lead">
+      その条文が、当サイトの影響タグ辞書にまだ登録されていないことを示します。
+      改正自体は検知できていますが、実務上の位置づけ（強度・業種・立場）を
+      まだ割り当てられていない状態です。
+    </p>
+    <p class="usage-lead">
+      「この条文はうちの実務に効く」といった心当たりがあれば、ぜひご一報ください。
+      いただいた情報をもとに辞書を育て、次回以降は強度やタグを付けて表示できるようになります。
+    </p>
+  </section>
+</main>
+
+<footer>
+  <p>条文ウォッチ — e-Gov法令APIの改正履歴をもとに、直近3ヶ月の本則条文の変化を自動検知して表示する早見表です。深い履歴や正確な条文はe-Gov本体でご確認ください。</p>
+  <p class="source">出典：e-Gov法令検索（<a href="https://laws.e-gov.go.jp/" target="_blank" rel="noopener noreferrer">https://laws.e-gov.go.jp/</a>）</p>
+</footer>

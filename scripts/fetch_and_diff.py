@@ -176,6 +176,28 @@ def flatten_text(node):
     return ""
 
 
+def flatten_excluding(node, exclude_tags):
+    """flatten_text と同じだが、exclude_tags のタグを持つ部分木を丸ごと除外する。"""
+    if node is None:
+        return ""
+    if isinstance(node, str):
+        return node
+    if isinstance(node, list):
+        return "".join(flatten_excluding(c, exclude_tags) for c in node)
+    if isinstance(node, dict):
+        if node.get("tag") in exclude_tags:
+            return ""
+        return flatten_excluding(node.get("children"), exclude_tags)
+    return ""
+
+
+def first_node_text(node, tag):
+    """node 配下で最初に見つかった指定タグのテキストを返す（なければ空文字）。"""
+    for found in iter_nodes(node, tag):
+        return re.sub(r"\s+", "", flatten_text(found))
+    return ""
+
+
 def iter_nodes(node, tag):
     """木を再帰的に辿り、指定タグのノードを列挙する。"""
     if isinstance(node, dict):
@@ -190,7 +212,14 @@ def iter_nodes(node, tag):
 def extract_main_articles(law_full_text):
     """law_full_text から本則（MainProvision）配下の条文を抽出する。
 
-    条文番号（"の"区切りに正規化）をキー、全文テキストを値とする辞書を返す。
+    条文番号（"の"区切りに正規化）をキー、以下を値とする辞書を返す。
+      {
+        "caption": 見出し（ArticleCaption）テキスト,
+        "body":    条番号（ArticleTitle）と見出しを除いた本文テキスト,
+        "full":    表示用の全文テキスト,
+      }
+    番号変更（引っ越し）の照合では caption と body を用い、
+    条番号そのものの差異に引きずられないようにする。
     """
     articles = {}
     for main in iter_nodes(law_full_text, "MainProvision"):
@@ -200,9 +229,13 @@ def extract_main_articles(law_full_text):
             if num is None:
                 continue
             key = display_num(num)
-            text = flatten_text(art)
-            text = re.sub(r"\s+", "", text)
-            articles[key] = text
+            full = re.sub(r"\s+", "", flatten_text(art))
+            caption = first_node_text(art, "ArticleCaption")
+            body = re.sub(
+                r"\s+", "",
+                flatten_excluding(art, ("ArticleTitle", "ArticleCaption")),
+            )
+            articles[key] = {"caption": caption, "body": body, "full": full}
     return articles
 
 
@@ -288,59 +321,181 @@ def build_diff_pairs(enforced, window_start_str):
 def diff_articles(old_map, new_map):
     """新旧の条文辞書を比較し、変更条文リストを返す。
 
-    各要素: {"article": key, "kind": "modified"|"added"|"deleted",
-             "old_text": ..., "new_text": ...}
+    各要素:
+      {
+        "article":      新（または現存）条文番号,
+        "old_article":  旧条文番号（renumbered系のみ、それ以外は None）,
+        "change_type":  "changed" | "renumbered" | "renumbered_and_changed"
+                        | "added" | "removed",
+        "old_text": ..., "new_text": ...,
+      }
+
+    番号変更（引っ越し）検知:
+      条文の同一性を「見出し（ArticleCaption）」で判定する。番号を据え置いた
+      内容改正と、番号を付け替えただけの引っ越しを区別するため、まず見出し
+      完全一致で新旧を対応付け、対応した番号が異なれば引っ越しとみなす。
+      これにより、条番号が1つずつ繰り下がる「シフト型再編」（旧5→新7 等、
+      番号が両側に存在してしまうケース）も捕捉できる。
+
+      対応付け手順:
+        Pass1: 見出しが非空かつ完全一致する新旧を対応付ける。
+        Pass2: Pass1で余った条文を、同一番号どうしで対応付ける
+               （見出し空・見出しごと改称された同番号条文の受け皿）。
+        残った新条文 -> "added" / 残った旧条文 -> "removed"。
+
+      対応した番号が一致 -> 内容差があれば "changed"。
+      対応した番号が相違 -> 本文一致で "renumbered"、
+                            本文差ありで "renumbered_and_changed"。
+      各引っ越しには old_orphaned（旧番号が新版に存在しない=辞書が旧番号で
+      残っている可能性）を付し、タグ継承の安全判定に用いる。
     """
     changes = []
-    all_keys = set(old_map) | set(new_map)
-    for key in all_keys:
-        old_t = old_map.get(key)
-        new_t = new_map.get(key)
-        if old_t is None and new_t is not None:
-            changes.append({
-                "article": key,
-                "kind": "added",
-                "old_text": "",
-                "new_text": new_t,
-            })
-        elif old_t is not None and new_t is None:
-            changes.append({
-                "article": key,
-                "kind": "deleted",
-                "old_text": old_t,
-                "new_text": "",
-            })
-        elif old_t != new_t:
-            changes.append({
-                "article": key,
-                "kind": "modified",
-                "old_text": old_t,
-                "new_text": new_t,
-            })
+    consumed_old = set()
+    consumed_new = set()
+
+    def numeric_sort_key(k):
+        return parse_num(k) or (10 ** 9,)
+
+    new_keys_sorted = sorted(new_map, key=numeric_sort_key)
+
+    # Pass1: 見出し完全一致（非空）で対応付け
+    old_by_caption = {}
+    for k in sorted(old_map, key=numeric_sort_key):
+        cap = old_map[k]["caption"]
+        if cap:
+            old_by_caption.setdefault(cap, []).append(k)
+
+    matched_pairs = []
+    for new_key in new_keys_sorted:
+        cap = new_map[new_key]["caption"]
+        if not cap:
+            continue
+        candidates = old_by_caption.get(cap)
+        if not candidates:
+            continue
+        old_key = candidates.pop(0)
+        consumed_old.add(old_key)
+        consumed_new.add(new_key)
+        matched_pairs.append((old_key, new_key))
+
+    # Pass2: 余りを同一番号どうしで対応付け
+    for new_key in new_keys_sorted:
+        if new_key in consumed_new:
+            continue
+        if new_key in old_map and new_key not in consumed_old:
+            consumed_old.add(new_key)
+            consumed_new.add(new_key)
+            matched_pairs.append((new_key, new_key))
+
+    # 対応ペアを分類
+    for old_key, new_key in matched_pairs:
+        old_a = old_map[old_key]
+        new_a = new_map[new_key]
+        if old_key == new_key:
+            if old_a["full"] != new_a["full"]:
+                changes.append({
+                    "article": new_key,
+                    "old_article": None,
+                    "change_type": "changed",
+                    "old_orphaned": False,
+                    "old_text": old_a["full"],
+                    "new_text": new_a["full"],
+                })
+            continue
+        same_body = old_a["body"] == new_a["body"]
+        changes.append({
+            "article": new_key,
+            "old_article": old_key,
+            "change_type": "renumbered" if same_body else "renumbered_and_changed",
+            "old_orphaned": old_key not in new_map,
+            "old_text": old_a["full"],
+            "new_text": new_a["full"],
+        })
+
+    # 対応しなかった新条文 -> 追加、旧条文 -> 削除
+    for new_key in new_keys_sorted:
+        if new_key in consumed_new:
+            continue
+        changes.append({
+            "article": new_key,
+            "old_article": None,
+            "change_type": "added",
+            "old_orphaned": False,
+            "old_text": "",
+            "new_text": new_map[new_key]["full"],
+        })
+    for old_key in sorted(old_map, key=numeric_sort_key):
+        if old_key in consumed_old:
+            continue
+        changes.append({
+            "article": old_key,
+            "old_article": None,
+            "change_type": "removed",
+            "old_orphaned": False,
+            "old_text": old_map[old_key]["full"],
+            "new_text": "",
+        })
+
     return changes
 
 
 # ---------------------------------------------------------------------------
 # 辞書突き合わせ
 # ---------------------------------------------------------------------------
+def info_from_entry(entry):
+    """辞書エントリから feedエントリ用の分類情報を組み立てる。"""
+    return {
+        "heading": entry.get("heading", ""),
+        "tier": entry.get("tier", 3),
+        "severity": entry.get("severity", ""),
+        "tags": entry.get("tags", {"industry": [], "stance": []}),
+        "note": entry.get("note", ""),
+    }
+
+
+def match_specific_entry(entries, num_key):
+    """entries から num_key に具体マッチ（ワイルドカード以外）するエントリを返す。"""
+    if num_key is None:
+        return None
+    for entry in entries:
+        if entry_matches(entry, num_key):
+            return entry
+    return None
+
+
 def classify(change, law_meta):
     """変更条文を辞書と突き合わせ、feedエントリの分類情報を返す。
 
-    (info_dict, category) を返す。category は "tagged" | "unclassified"。
+    (info_dict, category) を返す。
+    category は "tagged" | "inherited" | "unclassified"。
+
+    番号変更（renumbered系）で新番号が辞書未登録の場合、見出し一致した
+    旧番号が辞書に登録されていれば、そのタグ・強度・note を継承する。
     """
-    num_key = parse_num(change["article"])
     entries = law_meta["entries"]
+    num_key = parse_num(change["article"])
 
-    for entry in entries:
-        if entry_matches(entry, num_key):
-            return {
-                "heading": entry.get("heading", ""),
-                "tier": entry.get("tier", 3),
-                "severity": entry.get("severity", ""),
-                "tags": entry.get("tags", {"industry": [], "stance": []}),
-                "note": entry.get("note", ""),
-            }, "tagged"
+    # 1) 新番号での具体マッチ
+    entry = match_specific_entry(entries, num_key)
+    if entry is not None:
+        return info_from_entry(entry), "tagged"
 
+    # 2) renumbered系なら旧番号でタグ継承を試みる
+    #    ただし辞書は新番号基準で更新され得るため、旧番号が新版に残っている
+    #    （old_orphaned=False）場合は、その辞書エントリは新版の同番号条文を
+    #    指しており、引っ越し先に流用すると誤タグになる。旧番号が新版から
+    #    消えている場合（辞書が旧番号のまま取り残されている場合）のみ継承する。
+    change_type = change.get("change_type", "")
+    if change_type in ("renumbered", "renumbered_and_changed") and change.get("old_orphaned"):
+        old_key = parse_num(change.get("old_article"))
+        old_entry = match_specific_entry(entries, old_key)
+        if old_entry is not None:
+            info = info_from_entry(old_entry)
+            moved = "旧第%s条から移動" % display_num(change.get("old_article"))
+            info["note"] = (info["note"] + "。" + moved) if info["note"] else moved
+            return info, "inherited"
+
+    # 3) ワイルドカード（catch-all）→ 未分類扱い
     wildcard = find_wildcard_entry(entries)
     if wildcard is not None:
         return {
@@ -394,17 +549,17 @@ def process_law(law_meta, today_str, window_start_str):
     enforced = get_enforced_revisions(law_id, today_str)
     if not enforced:
         log("  現行版が見つかりません。スキップ。")
-        return [], {"tagged": 0, "unclassified": 0}
+        return [], {"tagged": 0, "inherited": 0, "unclassified": 0}
 
     pairs = build_diff_pairs(enforced, window_start_str)
     if not pairs:
         log("  比較対象ペアがありません（初版のみ等）。スキップ。")
-        return [], {"tagged": 0, "unclassified": 0}
+        return [], {"tagged": 0, "inherited": 0, "unclassified": 0}
     log("  比較ペア数 %d（基準日 %s 以降の改正を優先）" % (len(pairs), window_start_str))
 
     articles_cache = {}
     feed_entries = []
-    counts = {"tagged": 0, "unclassified": 0}
+    counts = {"tagged": 0, "inherited": 0, "unclassified": 0}
 
     for old_rev, new_rev, enforcement_date in pairs:
         old_date, old_id = old_rev
@@ -424,7 +579,8 @@ def process_law(law_meta, today_str, window_start_str):
                 "law_id": law_id,
                 "law_title": law_title,
                 "article_num": change["article"],
-                "change_kind": change["kind"],
+                "old_article_num": change.get("old_article"),
+                "change_type": change["change_type"],
                 "enforcement_date": enforcement_date,
                 "heading": info["heading"],
                 "old_text": change["old_text"],
@@ -448,7 +604,7 @@ def main():
         % (len(laws), today_str, window_start_str))
 
     all_changes = []
-    total = {"tagged": 0, "unclassified": 0}
+    total = {"tagged": 0, "inherited": 0, "unclassified": 0}
     for law_meta in laws:
         try:
             entries, counts = process_law(law_meta, today_str, window_start_str)
@@ -457,6 +613,7 @@ def main():
             continue
         all_changes.extend(entries)
         total["tagged"] += counts["tagged"]
+        total["inherited"] += counts["inherited"]
         total["unclassified"] += counts["unclassified"]
 
     feed = {
@@ -466,11 +623,19 @@ def main():
     with open(FEED_PATH, "w", encoding="utf-8") as f:
         json.dump(feed, f, ensure_ascii=False, indent=2)
 
+    type_counts = {}
+    for c in all_changes:
+        t = c.get("change_type", "")
+        type_counts[t] = type_counts.get(t, 0) + 1
+
     log("")
     log("=== 完了 ===")
-    log("変更条文 総数: %d" % len(all_changes))
-    log("辞書タグ付け: %d" % total["tagged"])
-    log("未分類      : %d" % total["unclassified"])
+    log("変更条文 総数    : %d" % len(all_changes))
+    log("辞書タグ付け     : %d" % total["tagged"])
+    log("タグ継承(引っ越し): %d" % total["inherited"])
+    log("未分類          : %d" % total["unclassified"])
+    log("change_type内訳  : %s"
+        % ", ".join("%s=%d" % (k, type_counts[k]) for k in sorted(type_counts)))
     log("出力: %s" % FEED_PATH)
 
 
