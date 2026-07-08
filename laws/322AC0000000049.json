@@ -1,0 +1,75 @@
+{
+  "law_id": "322AC0000000049",
+  "law_title": "労働基準法",
+  "entries": [
+    {
+      "article_range": "32-32の5",
+      "law_title": "労働基準法",
+      "heading": "労働時間・変形労働時間制",
+      "tier": 3,
+      "severity": "L2",
+      "tags": {
+        "industry": ["全般(IT含む)"],
+        "stance": ["使用者", "労働者"]
+      },
+      "note": "裁量労働制導入時の関連"
+    },
+    {
+      "article_range": "36",
+      "law_title": "労働基準法",
+      "heading": "時間外及び休日の労働（36協定）",
+      "tier": 3,
+      "severity": "L1",
+      "tags": {
+        "industry": ["全般(IT含む)"],
+        "stance": ["使用者", "労働者"]
+      },
+      "note": "頻出"
+    },
+    {
+      "article_range": "37",
+      "law_title": "労働基準法",
+      "heading": "割増賃金",
+      "tier": 3,
+      "severity": "L1",
+      "tags": {
+        "industry": ["全般(IT含む)"],
+        "stance": ["使用者", "労働者"]
+      }
+    },
+    {
+      "article_range": "39",
+      "law_title": "労働基準法",
+      "heading": "年次有給休暇",
+      "tier": 3,
+      "severity": "L2",
+      "tags": {
+        "industry": ["全般"],
+        "stance": ["使用者", "労働者"]
+      }
+    },
+    {
+      "article_range": "41,41の2",
+      "law_title": "労働基準法",
+      "heading": "労働時間等の適用除外（管理監督者・高度プロフェッショナル制度）",
+      "tier": 3,
+      "severity": "L1",
+      "tags": {
+        "industry": ["IT(裁量労働制対象職種が多い)"],
+        "stance": ["使用者", "労働者"]
+      }
+    },
+    {
+      "article_range": "*",
+      "law_title": "労働基準法",
+      "heading": "その他全条文",
+      "tier": 3,
+      "severity": "L4",
+      "tags": {
+        "industry": ["全般"],
+        "stance": []
+      },
+      "note": "辞書未登録。デフォルトは未分類扱い、報告待ち"
+    }
+  ]
+}

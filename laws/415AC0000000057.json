@@ -1,0 +1,109 @@
+{
+  "law_id": "415AC0000000057",
+  "law_title": "個人情報保護法",
+  "entries": [
+    {
+      "article_num": "23",
+      "law_title": "個人情報保護法",
+      "heading": "安全管理措置",
+      "tier": 1,
+      "severity": "L1",
+      "tags": {
+        "industry": ["IT", "SaaS"],
+        "stance": ["個人情報取扱事業者"]
+      }
+    },
+    {
+      "article_num": "25",
+      "law_title": "個人情報保護法",
+      "heading": "委託先の監督",
+      "tier": 1,
+      "severity": "L1",
+      "tags": {
+        "industry": ["IT", "SaaS"],
+        "stance": ["委託元", "委託先"]
+      },
+      "note": "再委託管理に直結、IT法務の頻出相談"
+    },
+    {
+      "article_num": "26",
+      "law_title": "個人情報保護法",
+      "heading": "漏えい等の報告等",
+      "tier": 1,
+      "severity": "L1",
+      "tags": {
+        "industry": ["IT", "SaaS"],
+        "stance": ["個人情報取扱事業者"]
+      }
+    },
+    {
+      "article_num": "27",
+      "law_title": "個人情報保護法",
+      "heading": "第三者提供の制限",
+      "tier": 1,
+      "severity": "L1",
+      "tags": {
+        "industry": ["IT", "SaaS"],
+        "stance": ["個人情報取扱事業者"]
+      }
+    },
+    {
+      "article_num": "28",
+      "law_title": "個人情報保護法",
+      "heading": "外国にある第三者への提供の制限",
+      "tier": 1,
+      "severity": "L1",
+      "tags": {
+        "industry": ["IT", "SaaS"],
+        "stance": ["個人情報取扱事業者"]
+      },
+      "note": "越境移転・海外リージョン利用時に必須"
+    },
+    {
+      "article_num": "29",
+      "law_title": "個人情報保護法",
+      "heading": "第三者提供に係る記録の作成等",
+      "tier": 1,
+      "severity": "L2",
+      "tags": {
+        "industry": ["IT", "SaaS"],
+        "stance": ["個人情報取扱事業者"]
+      }
+    },
+    {
+      "article_num": "30",
+      "law_title": "個人情報保護法",
+      "heading": "第三者提供を受ける際の確認等",
+      "tier": 1,
+      "severity": "L2",
+      "tags": {
+        "industry": ["IT", "SaaS"],
+        "stance": ["個人情報取扱事業者"]
+      }
+    },
+    {
+      "article_num": "31",
+      "law_title": "個人情報保護法",
+      "heading": "個人関連情報の第三者提供の制限等",
+      "tier": 1,
+      "severity": "L1",
+      "tags": {
+        "industry": ["IT", "SaaS"],
+        "stance": ["個人情報取扱事業者"]
+      },
+      "note": "Cookie/ID連携"
+    },
+    {
+      "article_num": "42",
+      "law_title": "個人情報保護法",
+      "heading": "仮名加工情報の第三者提供の制限等",
+      "tier": 1,
+      "severity": "L2",
+      "tags": {
+        "industry": ["IT"],
+        "stance": ["個人情報取扱事業者"]
+      },
+      "note": "データ利活用"
+    }
+  ]
+}

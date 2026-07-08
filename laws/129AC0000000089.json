@@ -1,0 +1,141 @@
+{
+  "law_id": "129AC0000000089",
+  "law_title": "民法",
+  "entries": [
+    {
+      "article_num": "632",
+      "law_title": "民法",
+      "heading": "請負",
+      "tier": 1,
+      "severity": "L1",
+      "tags": {
+        "industry": ["IT", "受託開発"],
+        "stance": ["注文者", "請負人"]
+      },
+      "note": "請負/準委任の区分の起点"
+    },
+    {
+      "article_num": "633",
+      "law_title": "民法",
+      "heading": "報酬の支払時期",
+      "tier": 1,
+      "severity": "L1",
+      "tags": {
+        "industry": ["IT", "受託開発"],
+        "stance": ["注文者", "請負人"]
+      }
+    },
+    {
+      "article_num": "634",
+      "law_title": "民法",
+      "heading": "注文者が受ける利益の割合に応じた報酬",
+      "tier": 1,
+      "severity": "L1",
+      "tags": {
+        "industry": ["IT", "受託開発"],
+        "stance": ["注文者", "請負人"]
+      }
+    },
+    {
+      "article_num": "636",
+      "law_title": "民法",
+      "heading": "請負人の担保責任の制限",
+      "tier": 1,
+      "severity": "L1",
+      "tags": {
+        "industry": ["IT", "受託開発"],
+        "stance": ["注文者", "請負人"]
+      },
+      "note": "契約不適合責任"
+    },
+    {
+      "article_num": "641",
+      "law_title": "民法",
+      "heading": "注文者による契約の解除",
+      "tier": 1,
+      "severity": "L1",
+      "tags": {
+        "industry": ["IT", "受託開発"],
+        "stance": ["注文者", "請負人"]
+      }
+    },
+    {
+      "article_num": "642",
+      "law_title": "民法",
+      "heading": "注文者についての破産手続の開始による解除",
+      "tier": 1,
+      "severity": "L1",
+      "tags": {
+        "industry": ["IT", "受託開発"],
+        "stance": ["注文者", "請負人"]
+      }
+    },
+    {
+      "article_num": "643",
+      "law_title": "民法",
+      "heading": "委任",
+      "tier": 1,
+      "severity": "L1",
+      "tags": {
+        "industry": ["IT", "準委任開発", "SES"],
+        "stance": ["委任者", "受任者"]
+      }
+    },
+    {
+      "article_num": "648",
+      "law_title": "民法",
+      "heading": "受任者の報酬",
+      "tier": 1,
+      "severity": "L1",
+      "tags": {
+        "industry": ["IT", "準委任"],
+        "stance": ["委任者", "受任者"]
+      }
+    },
+    {
+      "article_num": "648の2",
+      "law_title": "民法",
+      "heading": "成果等に対する報酬",
+      "tier": 1,
+      "severity": "L1",
+      "tags": {
+        "industry": ["IT", "準委任"],
+        "stance": ["委任者", "受任者"]
+      },
+      "note": "成果完成型準委任の重要論点"
+    },
+    {
+      "article_num": "651",
+      "law_title": "民法",
+      "heading": "委任の解除",
+      "tier": 1,
+      "severity": "L1",
+      "tags": {
+        "industry": ["IT", "準委任", "SES"],
+        "stance": ["委任者", "受任者"]
+      }
+    },
+    {
+      "article_num": "656",
+      "law_title": "民法",
+      "heading": "準委任",
+      "tier": 1,
+      "severity": "L1",
+      "tags": {
+        "industry": ["IT", "準委任", "SES"],
+        "stance": ["委任者", "受任者"]
+      }
+    },
+    {
+      "article_num": "565",
+      "law_title": "民法",
+      "heading": "移転した権利が契約の内容に適合しない場合における売主の担保責任",
+      "tier": 1,
+      "severity": "L2",
+      "tags": {
+        "industry": ["IT", "ソフトウェアライセンス"],
+        "stance": ["売主", "買主"]
+      }
+    }
+  ]
+}

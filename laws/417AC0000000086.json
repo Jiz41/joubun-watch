@@ -1,0 +1,98 @@
+{
+  "law_id": "417AC0000000086",
+  "law_title": "会社法",
+  "note": "条文範囲は見出しスキャンからの目安であり、未検証である。",
+  "entries": [
+    {
+      "article_range": "25-103",
+      "law_title": "会社法",
+      "heading": "設立手続",
+      "tier": 2,
+      "severity": "L2",
+      "tags": {
+        "industry": ["IT(創業期)"],
+        "stance": ["発起人", "設立時株主"]
+      }
+    },
+    {
+      "article_range": "199-213",
+      "law_title": "会社法",
+      "heading": "募集株式の発行（資金調達・第三者割当増資）",
+      "tier": 2,
+      "severity": "L1",
+      "tags": {
+        "industry": ["IT(資金調達)"],
+        "stance": ["会社", "引受人"]
+      },
+      "note": "VC出資契約と直結"
+    },
+    {
+      "article_range": "236-294",
+      "law_title": "会社法",
+      "heading": "新株予約権（ストックオプション）",
+      "tier": 2,
+      "severity": "L1",
+      "tags": {
+        "industry": ["IT(インセンティブ設計)"],
+        "stance": ["会社", "新株予約権者"]
+      },
+      "note": "IT企業で頻出"
+    },
+    {
+      "article_range": "107-115",
+      "law_title": "会社法",
+      "heading": "種類株式（優先株等）",
+      "tier": 2,
+      "severity": "L1",
+      "tags": {
+        "industry": ["IT(資金調達)"],
+        "stance": ["会社", "株主"]
+      },
+      "note": "VC投資契約の優先株条項"
+    },
+    {
+      "article_range": "121-154",
+      "law_title": "会社法",
+      "heading": "株主名簿・株式譲渡制限",
+      "tier": 2,
+      "severity": "L2",
+      "tags": {
+        "industry": ["IT"],
+        "stance": ["会社", "株主"]
+      }
+    },
+    {
+      "article_range": "330-430",
+      "law_title": "会社法",
+      "heading": "取締役・取締役会（責任・報酬・利益相反）",
+      "tier": 2,
+      "severity": "L2",
+      "tags": {
+        "industry": ["IT"],
+        "stance": ["会社", "取締役"]
+      }
+    },
+    {
+      "article_range": "748-816",
+      "law_title": "会社法",
+      "heading": "M&A（合併・会社分割・株式交換・株式移転）",
+      "tier": 2,
+      "severity": "L1",
+      "tags": {
+        "industry": ["IT(バイアウト/イグジット)"],
+        "stance": ["会社", "株主"]
+      }
+    },
+    {
+      "article_range": "475-574",
+      "law_title": "会社法",
+      "heading": "清算",
+      "tier": 2,
+      "severity": "L3",
+      "tags": {
+        "industry": ["IT(撤退時)"],
+        "stance": ["会社"]
+      }
+    }
+  ]
+}

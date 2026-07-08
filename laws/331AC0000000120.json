@@ -1,0 +1,75 @@
+{
+  "law_id": "331AC0000000120",
+  "law_title": "下請法",
+  "entries": [
+    {
+      "article_num": "2",
+      "law_title": "下請法",
+      "heading": "定義",
+      "tier": 1,
+      "severity": "L2",
+      "tags": {
+        "industry": ["IT"],
+        "stance": ["発注側", "受注側"]
+      },
+      "note": "情報成果物該当性の起点"
+    },
+    {
+      "article_num": "3",
+      "law_title": "下請法",
+      "heading": "製造委託等代金の支払期日",
+      "tier": 1,
+      "severity": "L1",
+      "tags": {
+        "industry": ["IT"],
+        "stance": ["受注側"]
+      }
+    },
+    {
+      "article_num": "4",
+      "law_title": "下請法",
+      "heading": "中小受託事業者の給付内容等の明示",
+      "tier": 1,
+      "severity": "L1",
+      "tags": {
+        "industry": ["IT"],
+        "stance": ["発注側"]
+      },
+      "note": "発注書面の記載義務"
+    },
+    {
+      "article_num": "5",
+      "law_title": "下請法",
+      "heading": "委託事業者の遵守事項",
+      "tier": 1,
+      "severity": "L1",
+      "tags": {
+        "industry": ["IT"],
+        "stance": ["発注側"]
+      },
+      "note": "買いたたき・減額等の禁止"
+    },
+    {
+      "article_num": "10",
+      "law_title": "下請法",
+      "heading": "勧告",
+      "tier": 1,
+      "severity": "L2",
+      "tags": {
+        "industry": ["IT"],
+        "stance": ["発注側", "受注側"]
+      }
+    },
+    {
+      "article_num": "14",
+      "law_title": "下請法",
+      "heading": "罰則",
+      "tier": 1,
+      "severity": "L1",
+      "tags": {
+        "industry": ["IT"],
+        "stance": ["発注側"]
+      }
+    }
+  ]
+}

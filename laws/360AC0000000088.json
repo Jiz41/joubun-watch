@@ -1,0 +1,100 @@
+{
+  "law_id": "360AC0000000088",
+  "law_title": "労働者派遣法",
+  "entries": [
+    {
+      "article_num": "24の2",
+      "law_title": "労働者派遣法",
+      "heading": "派遣元事業主以外からの労働者派遣受入れ禁止",
+      "tier": 1,
+      "severity": "L1",
+      "tags": {
+        "industry": ["IT", "SES"],
+        "stance": ["派遣先"]
+      },
+      "note": "偽装請負論点"
+    },
+    {
+      "article_num": "24の3",
+      "law_title": "労働者派遣法",
+      "heading": "個人情報の取扱い",
+      "tier": 1,
+      "severity": "L2",
+      "tags": {
+        "industry": ["IT"],
+        "stance": ["派遣元", "派遣先"]
+      },
+      "note": "個人情報保護法と交差"
+    },
+    {
+      "article_num": "26",
+      "law_title": "労働者派遣法",
+      "heading": "契約の内容等",
+      "tier": 1,
+      "severity": "L1",
+      "tags": {
+        "industry": ["IT", "SES"],
+        "stance": ["派遣元", "派遣先"]
+      },
+      "note": "契約書ひな形に直結"
+    },
+    {
+      "article_num": "27",
+      "law_title": "労働者派遣法",
+      "heading": "契約の解除等",
+      "tier": 1,
+      "severity": "L1",
+      "tags": {
+        "industry": ["IT", "SES"],
+        "stance": ["派遣元", "派遣先"]
+      }
+    },
+    {
+      "article_num": "29の2",
+      "law_title": "労働者派遣法",
+      "heading": "労働者派遣契約の解除に当たつて講ずべき措置",
+      "tier": 1,
+      "severity": "L1",
+      "tags": {
+        "industry": ["IT", "SES"],
+        "stance": ["派遣元", "派遣先"]
+      },
+      "note": "雇用維持義務"
+    },
+    {
+      "article_num": "35の2",
+      "law_title": "労働者派遣法",
+      "heading": "労働者派遣の期間（3年ルール）",
+      "tier": 1,
+      "severity": "L1",
+      "tags": {
+        "industry": ["IT", "SES"],
+        "stance": ["派遣元", "派遣先"]
+      },
+      "note": "頻出論点"
+    },
+    {
+      "article_num": "40の2",
+      "law_title": "労働者派遣法",
+      "heading": "労働者派遣の役務提供を受ける期間",
+      "tier": 1,
+      "severity": "L1",
+      "tags": {
+        "industry": ["IT", "SES"],
+        "stance": ["派遣先"]
+      }
+    },
+    {
+      "article_num": "44",
+      "law_title": "労働者派遣法",
+      "heading": "労働基準法の適用に関する特例",
+      "tier": 1,
+      "severity": "L2",
+      "tags": {
+        "industry": ["IT", "SES"],
+        "stance": ["派遣元", "派遣先"]
+      },
+      "note": "労基法との交差"
+    }
+  ]
+}

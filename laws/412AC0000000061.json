@@ -1,0 +1,54 @@
+{
+  "law_id": "412AC0000000061",
+  "law_title": "消費者契約法",
+  "entries": [
+    {
+      "article_range": "4",
+      "law_title": "消費者契約法",
+      "heading": "契約取消権（不実告知・断定的判断の提供等）",
+      "tier": 2,
+      "severity": "L1",
+      "tags": {
+        "industry": ["IT", "BtoC SaaS/アプリ"],
+        "stance": ["事業者", "消費者"]
+      },
+      "note": "利用規約の勧誘表現に直結"
+    },
+    {
+      "article_range": "8-10",
+      "law_title": "消費者契約法",
+      "heading": "不当条項の無効（免責条項・解除権放棄・損害賠償予定額等）",
+      "tier": 2,
+      "severity": "L1",
+      "tags": {
+        "industry": ["IT", "BtoC SaaS"],
+        "stance": ["事業者", "消費者"]
+      },
+      "note": "利用規約の免責条項レビューで最頻出"
+    },
+    {
+      "article_range": "12-48",
+      "law_title": "消費者契約法",
+      "heading": "適格消費者団体・差止請求関連（団体訴訟制度）",
+      "tier": 2,
+      "severity": "L3",
+      "tags": {
+        "industry": ["IT"],
+        "stance": ["事業者"]
+      },
+      "note": "IT法務が直接動く場面は少ない、参考情報扱い"
+    },
+    {
+      "article_range": "1-3,6,11",
+      "law_title": "消費者契約法",
+      "heading": "総則（目的・定義・事業者努力義務）",
+      "tier": 2,
+      "severity": "L2",
+      "tags": {
+        "industry": ["IT"],
+        "stance": ["事業者", "消費者"]
+      },
+      "note": "前提知識"
+    }
+  ]
+}
