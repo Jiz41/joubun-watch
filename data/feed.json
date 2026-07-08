@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-07-08T10:51:57.452591+09:00",
+  "generated_at": "2026-07-08T16:37:07.869484+09:00",
   "changes": [
     {
       "law_id": "331AC0000000120",
-      "law_title": "下請法",
+      "law_title": "取適法",
       "article_num": "1",
       "old_article_num": null,
       "change_type": "changed",
@@ -21,7 +21,7 @@
     },
     {
       "law_id": "331AC0000000120",
-      "law_title": "下請法",
+      "law_title": "取適法",
       "article_num": "2",
       "old_article_num": null,
       "change_type": "changed",
@@ -44,7 +44,7 @@
     },
     {
       "law_id": "331AC0000000120",
-      "law_title": "下請法",
+      "law_title": "取適法",
       "article_num": "6",
       "old_article_num": "4の2",
       "change_type": "renumbered_and_changed",
@@ -62,7 +62,7 @@
     },
     {
       "law_id": "331AC0000000120",
-      "law_title": "下請法",
+      "law_title": "取適法",
       "article_num": "7",
       "old_article_num": "5",
       "change_type": "renumbered_and_changed",
@@ -80,7 +80,7 @@
     },
     {
       "law_id": "331AC0000000120",
-      "law_title": "下請法",
+      "law_title": "取適法",
       "article_num": "9",
       "old_article_num": "6",
       "change_type": "renumbered_and_changed",
@@ -98,7 +98,7 @@
     },
     {
       "law_id": "331AC0000000120",
-      "law_title": "下請法",
+      "law_title": "取適法",
       "article_num": "10",
       "old_article_num": "7",
       "change_type": "renumbered_and_changed",
@@ -121,7 +121,7 @@
     },
     {
       "law_id": "331AC0000000120",
-      "law_title": "下請法",
+      "law_title": "取適法",
       "article_num": "11",
       "old_article_num": "8",
       "change_type": "renumbered_and_changed",
@@ -139,7 +139,7 @@
     },
     {
       "law_id": "331AC0000000120",
-      "law_title": "下請法",
+      "law_title": "取適法",
       "article_num": "12",
       "old_article_num": "9",
       "change_type": "renumbered_and_changed",
@@ -157,7 +157,7 @@
     },
     {
       "law_id": "331AC0000000120",
-      "law_title": "下請法",
+      "law_title": "取適法",
       "article_num": "14",
       "old_article_num": "10",
       "change_type": "renumbered_and_changed",
@@ -179,7 +179,7 @@
     },
     {
       "law_id": "331AC0000000120",
-      "law_title": "下請法",
+      "law_title": "取適法",
       "article_num": "3",
       "old_article_num": null,
       "change_type": "changed",
@@ -201,7 +201,7 @@
     },
     {
       "law_id": "331AC0000000120",
-      "law_title": "下請法",
+      "law_title": "取適法",
       "article_num": "4",
       "old_article_num": null,
       "change_type": "changed",
@@ -223,7 +223,7 @@
     },
     {
       "law_id": "331AC0000000120",
-      "law_title": "下請法",
+      "law_title": "取適法",
       "article_num": "5",
       "old_article_num": null,
       "change_type": "added",
@@ -245,7 +245,7 @@
     },
     {
       "law_id": "331AC0000000120",
-      "law_title": "下請法",
+      "law_title": "取適法",
       "article_num": "8",
       "old_article_num": null,
       "change_type": "added",
@@ -263,7 +263,7 @@
     },
     {
       "law_id": "331AC0000000120",
-      "law_title": "下請法",
+      "law_title": "取適法",
       "article_num": "13",
       "old_article_num": null,
       "change_type": "added",
@@ -281,7 +281,7 @@
     },
     {
       "law_id": "331AC0000000120",
-      "law_title": "下請法",
+      "law_title": "取適法",
       "article_num": "15",
       "old_article_num": null,
       "change_type": "added",
@@ -299,7 +299,7 @@
     },
     {
       "law_id": "331AC0000000120",
-      "law_title": "下請法",
+      "law_title": "取適法",
       "article_num": "16",
       "old_article_num": null,
       "change_type": "added",
@@ -317,7 +317,7 @@
     },
     {
       "law_id": "331AC0000000120",
-      "law_title": "下請法",
+      "law_title": "取適法",
       "article_num": "2の2",
       "old_article_num": null,
       "change_type": "removed",
@@ -335,7 +335,7 @@
     },
     {
       "law_id": "331AC0000000120",
-      "law_title": "下請法",
+      "law_title": "取適法",
       "article_num": "11",
       "old_article_num": null,
       "change_type": "removed",
@@ -353,7 +353,7 @@
     },
     {
       "law_id": "331AC0000000120",
-      "law_title": "下請法",
+      "law_title": "取適法",
       "article_num": "12",
       "old_article_num": null,
       "change_type": "removed",

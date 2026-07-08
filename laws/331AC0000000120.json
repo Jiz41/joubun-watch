@@ -1,10 +1,10 @@
 {
   "law_id": "331AC0000000120",
-  "law_title": "下請法",
+  "law_title": "取適法",
   "entries": [
     {
       "article_num": "2",
-      "law_title": "下請法",
+      "law_title": "取適法",
       "heading": "定義",
       "tier": 1,
       "severity": "L2",
@@ -16,7 +16,7 @@
     },
     {
       "article_num": "3",
-      "law_title": "下請法",
+      "law_title": "取適法",
       "heading": "製造委託等代金の支払期日",
       "tier": 1,
       "severity": "L1",
@@ -27,7 +27,7 @@
     },
     {
       "article_num": "4",
-      "law_title": "下請法",
+      "law_title": "取適法",
       "heading": "中小受託事業者の給付内容等の明示",
       "tier": 1,
       "severity": "L1",
@@ -39,7 +39,7 @@
     },
     {
       "article_num": "5",
-      "law_title": "下請法",
+      "law_title": "取適法",
       "heading": "委託事業者の遵守事項",
       "tier": 1,
       "severity": "L1",
@@ -51,7 +51,7 @@
     },
     {
       "article_num": "10",
-      "law_title": "下請法",
+      "law_title": "取適法",
       "heading": "勧告",
       "tier": 1,
       "severity": "L2",
@@ -62,7 +62,7 @@
     },
     {
       "article_num": "14",
-      "law_title": "下請法",
+      "law_title": "取適法",
       "heading": "罰則",
       "tier": 1,
       "severity": "L1",
