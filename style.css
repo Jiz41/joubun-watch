@@ -24,6 +24,7 @@
     --del-ink: #efbcb0;
     --focus: #a9bbef;
     --diff-mono: "SF Mono", "Menlo", "Consolas", "Hiragino Kaku Gothic ProN", monospace;
+    --diff-mark-underline: #ffffff; /* 見づらければ #f2d84a 等の黄色に変更 */
   }
 
   * { box-sizing: border-box; }
@@ -393,10 +394,13 @@
     user-select: none;
   }
   .diff-line mark {
-    background: rgba(255, 255, 255, 0.18);
+    background: none;
     color: inherit;
-    border-radius: 2px;
-    padding: 0 1px;
+    padding: 0;
+    text-decoration: underline;
+    text-decoration-color: var(--diff-mark-underline, #ffffff);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 2px;
   }
 
   .unclassified-note {
