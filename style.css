@@ -77,6 +77,12 @@
     letter-spacing: 0.03em;
   }
 
+  #app-version-display {
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-faint);
+    opacity: 0.8;
+  }
+
   .masthead-usage {
     margin-top: 6px;
     align-self: flex-start;

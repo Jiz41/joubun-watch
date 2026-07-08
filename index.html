@@ -1,12 +1,13 @@
 <title>華耀大照典｜法改正モニター</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="app-version" content="1.0.0">
 <link rel="stylesheet" href="style.css">
 
 <div class="masthead">
   <div class="masthead-inner">
     <label class="masthead-title" for="tab-new">華耀大照典</label>
-    <div class="masthead-sub">契約実務補助のための法改正モニター</div>
+    <div class="masthead-sub">契約実務補助のための法改正モニター <span id="app-version-display"></span></div>
     <a class="masthead-usage" href="usage.html">記号・タグの使い方</a>
   </div>
 </div>
@@ -231,6 +232,14 @@
       el.innerHTML = '<p class="empty-note">' + escapeHtml(msg) + "</p>";
     }
   }
+
+  (function showVersion() {
+    var meta = document.querySelector('meta[name="app-version"]');
+    var el = document.getElementById("app-version-display");
+    if (meta && el) {
+      el.textContent = "v" + meta.content;
+    }
+  })();
 
   fetch("data/feed.json", { cache: "no-store" })
     .then(function (r) {
