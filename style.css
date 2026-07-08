@@ -416,9 +416,13 @@
 
   .entry-source {
     margin-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
   }
 
-  .egov-link {
+  .egov-link,
+  .report-link {
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -436,12 +440,79 @@
     content: "↗";
     font-size: 0.9rem;
   }
-  .egov-link:hover {
+  .report-link::before {
+    content: "✎";
+    font-size: 0.9rem;
+  }
+  .egov-link:hover,
+  .report-link:hover {
     border-color: var(--accent);
   }
-  .egov-link:focus-visible {
+  .egov-link:focus-visible,
+  .report-link:focus-visible {
     outline: 2px solid var(--focus);
     outline-offset: 2px;
+  }
+
+  /* --- 報告フォーム --- */
+  .report-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 62ch;
+    margin-top: 18px;
+  }
+
+  .report-label {
+    font-size: 0.8rem;
+    color: var(--ink-faint);
+    letter-spacing: 0.03em;
+    margin-bottom: -6px;
+  }
+
+  .report-form select,
+  .report-form input[type="text"],
+  .report-form textarea {
+    font: inherit;
+    font-size: 0.92rem;
+    color: var(--ink);
+    background: var(--surface);
+    border: 1px dashed var(--rule);
+    border-radius: 8px;
+    padding: 10px 12px;
+    min-height: 44px;
+    width: 100%;
+  }
+
+  .report-form textarea {
+    resize: vertical;
+    line-height: 1.7;
+  }
+
+  .report-submit {
+    min-height: 44px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background: var(--accent);
+    color: #fff;
+    font: inherit;
+    font-size: 0.92rem;
+    font-weight: 700;
+    cursor: pointer;
+    align-self: flex-start;
+  }
+  .report-submit:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  .hp-field {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
   }
 
   /* --- 使い方ページ --- */

@@ -1,0 +1,78 @@
+<title>報告｜条文ウォッチ</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="style.css">
+
+<div class="masthead">
+  <div class="masthead-inner">
+    <a class="masthead-title" href="index.html">条文ウォッチ</a>
+    <div class="masthead-sub">タグ・影響についての報告</div>
+    <a class="masthead-usage" href="index.html">一覧に戻る</a>
+  </div>
+</div>
+
+<main class="usage">
+  <p class="usage-intro">
+    「このタグは違う」「未分類だけどこういう業種・業務に影響しそう」といった情報を
+    お寄せください。いただいた内容は辞書の見直しに使わせていただきます。
+  </p>
+
+  <form name="report" method="POST" data-netlify="true" data-netlify-recaptcha="true" netlify-honeypot="hp-field" class="report-form" id="report-form">
+    <input type="hidden" name="form-name" value="report">
+    <p class="hp-field" aria-hidden="true">
+      <label>入力しないでください<input name="hp-field" tabindex="-1" autocomplete="off"></label>
+    </p>
+
+    <label class="report-label" for="law_title">法域</label>
+    <select name="law_title" id="law_title" required>
+      <option value="">選択してください</option>
+      <option value="民法">民法</option>
+      <option value="会社法">会社法</option>
+      <option value="個人情報保護法">個人情報保護法</option>
+      <option value="消費者契約法">消費者契約法</option>
+      <option value="下請法">下請法</option>
+      <option value="労働基準法">労働基準法</option>
+      <option value="労働者派遣法">労働者派遣法</option>
+      <option value="その他・不明">その他・不明</option>
+    </select>
+
+    <label class="report-label" for="article_num">条文番号</label>
+    <input type="text" name="article_num" id="article_num" placeholder="例：第25条">
+
+    <label class="report-label" for="message">報告内容</label>
+    <textarea name="message" id="message" rows="6" required placeholder="この改正はこういう業種・業務に影響しそうです、タグが実態と違う、など"></textarea>
+
+    <label class="report-label" for="contact">連絡先（任意）</label>
+    <input type="text" name="contact" id="contact" placeholder="返信が必要な場合のみ">
+
+    <div data-netlify-recaptcha="true"></div>
+
+    <button type="submit" class="report-submit">送信する</button>
+  </form>
+</main>
+
+<footer>
+  <p>条文ウォッチ — e-Gov法令APIの改正履歴をもとに、直近3ヶ月の本則条文の変化を自動検知して表示する早見表です。深い履歴や正確な条文はe-Gov本体でご確認ください。</p>
+  <p class="source">出典：e-Gov法令検索（<a href="https://laws.e-gov.go.jp/" target="_blank" rel="noopener noreferrer">https://laws.e-gov.go.jp/</a>）</p>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+  var params = new URLSearchParams(window.location.search);
+  var law = params.get("law");
+  var article = params.get("article");
+  if (law) {
+    var lawSelect = document.getElementById("law_title");
+    for (var i = 0; i < lawSelect.options.length; i++) {
+      if (lawSelect.options[i].value === law) {
+        lawSelect.value = law;
+        break;
+      }
+    }
+  }
+  if (article) {
+    document.getElementById("article_num").value = article;
+  }
+})();
+</script>

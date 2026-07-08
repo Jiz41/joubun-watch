@@ -167,10 +167,13 @@
       '<div class="unclassified-note">この条文はまだ影響タグが割り当てられていません。</div>';
 
     var egovUrl = "https://laws.e-gov.go.jp/law/" + encodeURIComponent(c.law_id);
+    var reportUrl = "report.html?law=" + encodeURIComponent(c.law_title || "")
+      + "&article=" + encodeURIComponent(article || "");
     var egovLink = c.law_id
       ? '<div class="entry-source">'
         + '<a class="egov-link" href="' + escapeHtml(egovUrl) + '"'
         + ' target="_blank" rel="noopener noreferrer">e-Govで原文を見る</a>'
+        + '<a class="report-link" href="' + escapeHtml(reportUrl) + '">タグが違うと思ったら報告</a>'
         + "</div>"
       : "";
 
