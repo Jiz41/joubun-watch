@@ -616,12 +616,25 @@ def main():
         total["inherited"] += counts["inherited"]
         total["unclassified"] += counts["unclassified"]
 
-    feed = {
-        "generated_at": now.isoformat(),
-        "changes": all_changes,
-    }
-    with open(FEED_PATH, "w", encoding="utf-8") as f:
-        json.dump(feed, f, ensure_ascii=False, indent=2)
+    existing_changes = None
+    if os.path.exists(FEED_PATH):
+        try:
+            with open(FEED_PATH, encoding="utf-8") as f:
+                existing_feed = json.load(f)
+            existing_changes = existing_feed.get("changes")
+        except (json.JSONDecodeError, OSError) as e:
+            log("  [WARN] 既存feed.jsonの読み込みに失敗（新規として扱う）: %s" % e)
+            existing_changes = None
+
+    if existing_changes == all_changes:
+        log("変更なしのためfeed.jsonを更新しませんでした")
+    else:
+        feed = {
+            "generated_at": now.isoformat(),
+            "changes": all_changes,
+        }
+        with open(FEED_PATH, "w", encoding="utf-8") as f:
+            json.dump(feed, f, ensure_ascii=False, indent=2)
 
     type_counts = {}
     for c in all_changes:
